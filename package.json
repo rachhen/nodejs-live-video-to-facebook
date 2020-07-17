@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-live-video-to-facebook",
+  "version": "1.0.0",
+  "description": "Nodejs live stream to facebook",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "facebook",
+    "live stream",
+    "ffmpeg"
+  ],
+  "author": "Woufu",
+  "repository": {
+    "url": "https://github.com/rachhen/nodejs-live-video-to-facebook.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.4",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
