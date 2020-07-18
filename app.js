@@ -2,15 +2,25 @@ const path = require('path');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const fbvid = require('fbvideos');
+const rfs = require('rotating-file-stream');
+const morgan = require('morgan');
 const live = require('./live');
+const { generator } = require('./utils');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+// create a rotating write stream
+const accessLogStream = rfs.createStream(generator, {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log'),
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-// app.use(express.json({ extended: true }));
+app.use(express.json({ extended: true }));
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(fileUpload());
 
 app.post('/upload', (req, res, next) => {
