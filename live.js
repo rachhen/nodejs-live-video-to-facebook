@@ -44,12 +44,18 @@ const live = (inputPath, outputPath) => {
       '-vcodec libx264',
       '-preset veryfast',
       '-crf 22',
-      '-maxrate 1000k',
-      '-bufsize 3000k',
+      '-maxrate 1500k',
+      '-bufsize 6000k',
       '-acodec libmp3lame',
       '-ac 2',
       '-ar 44100',
-      '-b:a 96k',
+      '-b:a 128k',
+      '-pix_fmt yuv420p',
+      '-profile:v baseline',
+      '-vb 400k',
+      '-deinterlace',
+      '-g 30',
+      '-r 30',
     ])
     .format('flv');
   command

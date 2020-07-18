@@ -3,16 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>មៀវមៀវ!!🐱</title>
   </head>
   <body>
+    <h2>Upload Video To Live</h2>
+    <p>
+      <strong>បញ្ចាក់៖</strong> Video របស់អ្នកនឹងត្រូវបានលុបចេញពី Server
+      បន្ទាប់ពិការ Live ត្រូវបានបញ្ចប់។ ព្រោះ Server មាន Disk Space តែ 50G នឹង
+      Data Tranfer 2T។ សូមមេត្ដាសាកល្បងតាមការគួរ។
+    </p>
     <form action="/upload" method="post" enctype="multipart/form-data">
       <label for="rtmps">rtmps url</label><br />
-      <textarea name="rtmps" id="rtmps" rows="3" cols="100"></textarea>
+      <textarea name="rtmps" id="rtmps" rows="1" cols="100"></textarea>
       <br />
       <br />
       <input type="file" name="video" />
-      <button type="submit">Upload</button>
+      <button type="submit">Upload And Live</button>
     </form>
+    <br />
+    <br />
+    <h2>Live with Facebok Url</h2>
+    <form action="/facebook-url" method="post" enctype="multipart/form-data">
+      <label for="rtmps">rtmps url</label><br />
+      <textarea name="rtmps" id="rtmps" rows="1" cols="100"></textarea>
+      <br />
+      <textarea
+        name="facebokUrl"
+        id="facebokUrl"
+        rows="3"
+        cols="100"
+      ></textarea>
+      <br />
+      <button type="submit">Live Now</button>
+    </form>
+    <p>
+      មានបញ្ហាអីប្រាប់៖
+      <a href="https:/fb.me/woufu" target="_blank">Woufu</a> ផង។
+    </p>
   </body>
 </html>

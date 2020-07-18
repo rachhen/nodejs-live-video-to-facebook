@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const fbvid = require('fbvideos');
 const live = require('./live');
 
 const app = express();
@@ -9,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-app.use(express.json({ extended: true }));
+// app.use(express.json({ extended: true }));
 app.use(fileUpload());
 
 app.post('/upload', (req, res, next) => {
@@ -24,6 +25,15 @@ app.post('/upload', (req, res, next) => {
     live(inputPath, req.body.rtmps);
   });
   res.send('<h1 style="color: red;">Living 🖖</h1> ');
+});
+
+app.post('/facebook-url', (req, res, next) => {
+  const url = req.body.facebokUrl;
+  console.log(req.body);
+  fbvid.high(url).then((vid) => {
+    live(vid.url, req.body.rtmps);
+    res.send('<h1 style="color: red;">Living 🖖</h1> ');
+  });
 });
 
 app.listen(PORT, () => {
