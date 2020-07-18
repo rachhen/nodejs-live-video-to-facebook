@@ -14,10 +14,10 @@
     </p>
     <form action="/upload" method="post" enctype="multipart/form-data">
       <label for="rtmps">rtmps url</label><br />
-      <textarea name="rtmps" id="rtmps" rows="1" cols="100"></textarea>
+      <textarea name="rtmps" id="rtmps" rows="1" cols="100" required></textarea>
       <br />
       <br />
-      <input type="file" name="video" />
+      <input type="file" name="video" required />
       <button type="submit">Upload And Live</button>
     </form>
     <br />
@@ -25,13 +25,14 @@
     <h2>Live with Facebok Url</h2>
     <form action="/facebook-url" method="post" enctype="multipart/form-data">
       <label for="rtmps">rtmps url</label><br />
-      <textarea name="rtmps" id="rtmps" rows="1" cols="100"></textarea>
+      <textarea name="rtmps" id="rtmps" rows="1" cols="100" required></textarea>
       <br />
       <textarea
         name="facebokUrl"
         id="facebokUrl"
         rows="3"
         cols="100"
+        required
       ></textarea>
       <br />
       <button type="submit">Live Now</button>

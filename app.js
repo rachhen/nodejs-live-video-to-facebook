@@ -18,7 +18,7 @@ const accessLogStream = rfs.createStream(generator, {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-app.use(express.json({ extended: true }));
+// app.use(express.json({ extended: true, limit: '10G' }));
 // setup the logger
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(fileUpload());
