@@ -25,7 +25,7 @@ app.use(fileUpload());
 
 app.post('/upload', (req, res, next) => {
   const name = req.files.video.name;
-  const inputPath = path.join(__dirname, 'tmp', name);
+  const inputPath = path.join(__dirname, 'videos', name);
 
   req.files.video.mv(inputPath, (err) => {
     if (err) {
