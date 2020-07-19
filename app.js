@@ -1,11 +1,11 @@
 const path = require('path');
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const fbvid = require('fbvideos');
 const rfs = require('rotating-file-stream');
 const morgan = require('morgan');
 const live = require('./live');
 const { generator } = require('./utils');
+const { getUrl, msg } = require('./facebook');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,25 +25,50 @@ app.use(fileUpload());
 
 app.post('/upload', (req, res, next) => {
   const name = req.files.video.name;
+  const loop = req.body.loop;
+  console.log(req.body);
   const inputPath = path.join(__dirname, 'videos', name);
 
   req.files.video.mv(inputPath, (err) => {
     if (err) {
       return res.send('Upload error');
     }
-
-    live(inputPath, req.body.rtmps);
+    if (loop === 'infiniteLoop') {
+      live(inputPath, req.body.rtmps, '-stream_loop -1');
+    } else if (loop === 'customLoop') {
+      const customLoop = parseInt(req.body.customLoop) - 1;
+      live(inputPath, req.body.rtmps, `-stream_loop ${customLoop}`);
+    } else {
+      res.send(
+        '<h1 style="color: green;">Something Wrong With You Video ⛔️</h1> ',
+      );
+    }
   });
-  res.send('<h1 style="color: red;">Living 🖖</h1> ');
+  res.send('<h1 style="color: green;">Living 🖖</h1> ');
 });
 
-app.post('/facebook-url', (req, res, next) => {
-  const url = req.body.facebokUrl;
+app.post('/facebook-url', async (req, res, next) => {
+  const facebokUrl = req.body.facebokUrl;
+  const loop = req.body.loop;
+  const url = await getUrl(facebokUrl);
+
   console.log(req.body);
-  fbvid.high(url).then((vid) => {
-    live(vid.url, req.body.rtmps);
-    res.send('<h1 style="color: red;">Living 🖖</h1> ');
-  });
+
+  if (url) {
+    if (loop === 'infiniteLoop') {
+      live(url, req.body.rtmps, '-stream_loop -1');
+    } else if (loop === 'customLoop') {
+      const customLoop = parseInt(req.body.customLoop) - 1;
+      live(url, req.body.rtmps, `-stream_loop ${customLoop}`);
+    } else {
+      res.send(
+        '<h1 style="color: green;">Something Wrong With You Video ⛔️</h1> ',
+      );
+    }
+    return res.send('<h1 style="color: green;">Living 🖖</h1> ');
+  }
+
+  res.send(`<h1 style="color: red;">${msg}</h1>`);
 });
 
 app.listen(PORT, () => {

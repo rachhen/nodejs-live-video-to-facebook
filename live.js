@@ -6,6 +6,7 @@
 
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
+const url = require('url');
 
 /**
  * Living video uploaded
@@ -18,27 +19,34 @@ const fs = require('fs');
  * @param {String} inputPath
  * @param {String} outputPath
  */
-const live = (inputPath, outputPath) => {
+const live = (inputPath, outputPath, stream_loop) => {
   const ffmpegPath = '/usr/local/bin/ffmpeg'; // Path ffmpeg that you already install
 
   var command = ffmpeg(inputPath)
     .setFfmpegPath(ffmpegPath)
+    .inputOptions(stream_loop)
     .inputOptions('-re')
     .inputOptions('-ac 2')
     .size('1080x?')
-    .on('start', function (commandLine) {
-      console.log('[' + new Date() + '] Vedio is Pushing !');
+    .on('start', (commandLine) => {
+      console.log('[' + new Date() + '] Video is Pushing !');
       console.log('commandLine: ' + commandLine);
     })
-    .on('error', function (err, stdout, stderr) {
+    .on('error', (err, stdout, stderr) => {
       console.log('error: ' + err.message);
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
-      fs.unlinkSync(inputPath); // Remove video file
+      const result = url.parse(inputPath);
+      if (!result.hostname) {
+        fs.unlinkSync(inputPath); // Remove video file
+      }
     })
-    .on('end', function () {
-      console.log('[' + new Date() + '] Vedio Pushing is Finished !');
-      fs.unlinkSync(inputPath); // Remove video file
+    .on('end', () => {
+      console.log('[' + new Date() + '] Video Pushing is Finished !');
+      const result = url.parse(inputPath);
+      if (!result.hostname) {
+        fs.unlinkSync(inputPath); // Remove video file
+      }
     })
     .addOptions([
       '-vcodec libx264',
@@ -63,6 +71,19 @@ const live = (inputPath, outputPath) => {
       end: true,
     })
     .run();
+};
+
+const validURL = (str) => {
+  var pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(str);
 };
 
 module.exports = live;

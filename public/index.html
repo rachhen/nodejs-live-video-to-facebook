@@ -14,10 +14,37 @@
     </p>
     <form action="/upload" method="post" enctype="multipart/form-data">
       <label for="rtmps">rtmps url</label><br />
-      <textarea name="rtmps" id="rtmps" rows="1" cols="100" required></textarea>
-      <br />
+      <textarea
+        name="rtmps"
+        id="rtmps"
+        rows="1"
+        cols="150"
+        placeholder="rtmps://live-api-s.facebook.com:443/rtmp/xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        required
+      ></textarea>
       <br />
       <input type="file" name="video" required />
+      <br />
+      <br />
+      <span
+        >Infinite Loop until 8 hours or Custom you own loop base on your video
+        time, but limit 8 hours.</span
+      >
+      <br />
+      <input
+        type="radio"
+        id="infiniteLoop"
+        name="loop"
+        value="infiniteLoop"
+        checked
+      />
+
+      <label for="infiniteLoop">Infinite Loop</label><br />
+      <input type="radio" id="customLoop" name="loop" value="customLoop" />
+      <label for="customLoop">Manual Set</label><br />
+      <input type="number" name="customLoop" value="1" min="1" step="1" />
+      <br />
+      <br />
       <button type="submit">Upload And Live</button>
     </form>
     <br />
@@ -25,15 +52,42 @@
     <h2>Live with Facebok Url</h2>
     <form action="/facebook-url" method="post" enctype="multipart/form-data">
       <label for="rtmps">rtmps url</label><br />
-      <textarea name="rtmps" id="rtmps" rows="1" cols="100" required></textarea>
+      <textarea
+        name="rtmps"
+        id="rtmps"
+        rows="1"
+        cols="150"
+        placeholder="rtmps://live-api-s.facebook.com:443/rtmp/xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        required
+      ></textarea>
       <br />
+      <label for="rtmps">Video URL</label><br />
       <textarea
         name="facebokUrl"
         id="facebokUrl"
         rows="3"
-        cols="100"
+        cols="150"
+        placeholder="https://facebook.com/grammygoldpage/videos/977418509285937/"
         required
       ></textarea>
+      <br />
+      <span
+        >Infinite Loop until 8 hours or Custom you own loop base on your video
+        time, but limit 8 hours.</span
+      >
+      <br />
+      <input
+        type="radio"
+        id="infiniteLoop-url"
+        name="loop"
+        value="infiniteLoop"
+        checked
+      />
+      <label for="infiniteLoop-url">Infinite Loop</label><br />
+      <input type="radio" id="customLoop-url" name="loop" value="customLoop" />
+      <label for="customLoop-url">Manual Set</label><br />
+      <input type="number" name="customLoop" value="1" min="1" step="1" />
+      <br />
       <br />
       <button type="submit">Live Now</button>
     </form>
