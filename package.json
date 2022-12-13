@@ -18,7 +18,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-fileupload": "^1.1.9",
     "fb-video-downloader": "^1.0.3",
     "fbvideos": "^1.0.2",
